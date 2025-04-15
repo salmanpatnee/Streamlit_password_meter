@@ -1,4 +1,6 @@
 import streamlit as st
+import re
+import random
 
 def is_blacklisted(password):
     blacklist = ['password', '123456', '12345678', 'qwerty', 'abc123', 'password123', '111111', 'admin']
@@ -38,6 +40,10 @@ def check_password_strength(password):
 
     return score, feedback
 
+def suggest_strong_password():
+    chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
+    return ''.join(random.choice(chars) for _ in range(12))
+
 def strength_label(score):
     if score == 4:
         return "Strong", "✅ Strong Password!"
@@ -65,3 +71,8 @@ if password:
         st.markdown("#### Suggestions:")
         for msg in feedback:
             st.write("- " + msg)
+    
+    if score < 4:
+        st.markdown("---")
+        st.markdown("#### Suggested Strong Password:")
+        st.code(suggest_strong_password())
