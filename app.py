@@ -12,6 +12,12 @@ def check_password_strength(password):
         feedback.append("❌ This password is too common. Choose something more unique.")
         return 1, feedback
 
+    # Length Check
+    if len(password) >= 8:
+        score += 1
+    else:
+        feedback.append("❌ Password should be at least 8 characters long.")
+        
     return score, feedback
 
 def strength_label(score):
